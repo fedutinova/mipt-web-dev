@@ -1,13 +1,29 @@
 from fastapi import FastAPI, Depends, HTTPException, status
+from contextlib import asynccontextmanager
 from typing import List
 from sqlalchemy.ext.asyncio import AsyncSession
-from . import schemas, crud, database, models
+from app import schemas, crud, database, models
+from app.database import init_models, close_engine
 
-app = FastAPI(title="Order Service", version="1.0.0")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await init_models()
+    yield
+    await close_engine()
 
-@app.on_event("startup")
-async def on_startup():
-    await database.init_models()
+app = FastAPI(
+    title="Order Service",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/api/v1/orders", response_model=schemas.OrderOut, status_code=status.HTTP_201_CREATED)
 async def create_order(order: schemas.OrderCreate, session: AsyncSession = Depends(database.get_session)):

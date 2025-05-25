@@ -11,15 +11,16 @@ class OrderCreate(BaseModel):
     customer_name: str
     customer_email: EmailStr
     items: List[OrderItemCreate]
+    postal_code: int
+    address_line: str
+    city: str
+    customer_phone: str
 
 class OrderItemOut(BaseModel):
     product_id: str
     product_name: str
     price: Decimal
     quantity: int
-
-    class Config:
-        orm_mode = True
 
 class OrderStatus(str, Enum):
     pending = "pending"
@@ -35,6 +36,3 @@ class OrderOut(BaseModel):
     status: OrderStatus
     total_price: Decimal
     items: List[OrderItemOut]
-
-    class Config:
-        orm_mode = True

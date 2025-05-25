@@ -29,3 +29,7 @@ async def update_product(session: AsyncSession, product_id: str, upd: schemas.Pr
 async def delete_product(session: AsyncSession, product_id: str):
     await session.execute(delete(models.Product).where(models.Product.id == product_id))
     await session.commit()
+
+async def list_products(db: AsyncSession):
+    res = await db.execute(select(models.Product))
+    return res.scalars().all()

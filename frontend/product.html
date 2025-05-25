@@ -144,15 +144,11 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
-        .product-img {
-            width: 100%;
-            height: 200px;
-            background-color: #ecf0f1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #7f8c8d;
-            font-size: 14px;
+        img.product-img {
+            width:100%;
+            height:200px;
+            object-fit:cover;
+            display:block;
         }
         
         .product-info {
@@ -364,25 +360,6 @@
             flex: 1;
         }
         
-        .cart-item-controls {
-            display: flex;
-            align-items: center;
-        }
-        
-        .cart-item-controls button {
-            background: #ecf0f1;
-            border: 1px solid #bdc3c7;
-            width: 30px;
-            height: 30px;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        
-        .cart-item-controls span {
-            margin: 0 15px;
-            font-weight: bold;
-        }
-        
         .delivery-option {
             background-color: white;
             padding: 15px;
@@ -465,7 +442,6 @@
                     <li><a href="catalog.html">Каталог</a></li>
                     <li><a href="index.html#about">О нас</a></li>
                     <li><a href="index.html#contacts">Контакты</a></li>
-                    <li><a href="cart.html">Корзина</a></li>
                 </ul>
             </nav>
         </div>
@@ -492,7 +468,7 @@
                         </div>
                         <div style="font-size: 1.8rem; font-weight: bold; color: #e74c3c; margin-bottom: 20px;">2 999 ₽</div>
                         <p style="margin-bottom: 25px; font-size: 1.1rem;">Преобразите свое пространство с помощью нашей самой передовой интеллектуальной светодиодной лампы с управлением через смартфон и поддержкой голосовых помощников.</p>
-                        <button class="btn" style="margin-bottom: 30px; padding: 12px 30px; font-size: 1.1rem;">+ В корзину</button>
+                        <button class="btn" style="margin-bottom: 30px; padding: 12px 30px; font-size: 1.1rem;">+ Заказать</button>
                         
                         <div class="smart-features">
                             <h3 style="margin-bottom: 20px; color: #2c3e50;">Характеристики</h3>
@@ -587,7 +563,7 @@
                             <div class="product-title">Smart LED подсветка</div>
                             <div style="color: #7f8c8d;">18 RGB цветов</div>
                             <div class="product-price">4 999 ₽</div>
-                            <a href="#" class="btn">В корзину</a>
+                            <a href="#" class="btn">Заказать</a>
                         </div>
                     </div>
                     
@@ -597,7 +573,7 @@
                             <div class="product-title">Smart Лампочка 24W</div>
                             <div style="color: #7f8c8d;">RGB + Белый свет</div>
                             <div class="product-price">7 999 ₽</div>
-                            <a href="#" class="btn">В корзину</a>
+                            <a href="#" class="btn">Заказать</a>
                         </div>
                     </div>
                     
@@ -607,7 +583,7 @@
                             <div class="product-title">Умная лампа RGB</div>
                             <div style="color: #7f8c8d;">16 миллионов цветов</div>
                             <div class="product-price">6 999 ₽</div>
-                            <a href="#" class="btn">В корзину</a>
+                            <a href="#" class="btn">Заказать</a>
                         </div>
                     </div>
                     
@@ -617,7 +593,7 @@
                             <div class="product-title">Умная лампа E27</div>
                             <div style="color: #7f8c8d;">Стандартный цоколь</div>
                             <div class="product-price">6 999 ₽</div>
-                            <a href="#" class="btn">В корзину</a>
+                            <a href="#" class="btn">Заказать</a>
                         </div>
                     </div>
                 </div>
@@ -661,18 +637,6 @@
         plusBtn.addEventListener('click', function() {
             let value = parseInt(quantityInput.value);
             quantityInput.value = value + 1;
-        });
-        
-        // Добавление в корзину
-        const addToCartBtn = document.getElementById('add-to-cart-btn');
-        
-        addToCartBtn.addEventListener('click', function() {
-            const productId = this.dataset.id;
-            const productName = this.dataset.name;
-            const productPrice = parseFloat(this.dataset.price);
-            const quantity = parseInt(quantityInput.value);
-            
-            addToCart(productId, productName, productPrice, quantity);
         });
     });
     </script>

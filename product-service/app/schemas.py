@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from pydantic import ConfigDict
 from typing import Optional
 from decimal import Decimal
 
@@ -10,7 +11,10 @@ class ProductBase(BaseModel):
     is_active: bool = True
 
 class ProductCreate(ProductBase):
-    pass
+    name: str
+    description: str | None = None
+    price: Decimal = Field(..., gt=0)
+    image_url: str | None = None
 
 class ProductUpdate(BaseModel):
     name: Optional[str] = None
@@ -18,9 +22,9 @@ class ProductUpdate(BaseModel):
     price: Optional[Decimal] = Field(None, gt=0)
     in_stock: Optional[int] = Field(None, ge=0)
     is_active: Optional[bool] = None
+    image_url: str | None = None
 
 class ProductOut(ProductBase):
     id: str
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

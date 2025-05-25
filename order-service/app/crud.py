@@ -29,7 +29,11 @@ async def create_order(session: AsyncSession, order: schemas.OrderCreate):
     db_order = models.Order(
         customer_name=order.customer_name,
         customer_email=order.customer_email,
-        total_price=total
+        total_price=total,
+        customer_phone=order.customer_phone,
+        address_line=order.address_line,
+        city=order.city,
+        postal_code=order.postal_code
     )
     session.add(db_order)
     await session.flush()  # to get ID
