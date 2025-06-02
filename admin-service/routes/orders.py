@@ -1,44 +1,22 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from typing import List
-from uuid import uuid4
+from fastapi import APIRouter, Depends, HTTPException
+import httpx
+from fastapi.security import OAuth2PasswordBearer
 
 router = APIRouter()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/admin/login")
 
-orders = {}
+ORDER_SERVICE_URL = "http://order-service:8000/api/v1/orders"
 
-class OrderItem(BaseModel):
-    product_id: str
-    product_name: str
-    price: float
-    quantity: int
+@router.get("/")
+async def get_orders(token: str = Depends(oauth2_scheme)):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(ORDER_SERVICE_URL)
+    return response.json()
 
-class Order(BaseModel):
-    id: str
-    customer_name: str
-    customer_email: str
-    customer_phone: str
-    address_line: str
-    city: str
-    postal_code: str
-    status: str = "pending"
-    items: List[OrderItem]
-
-@router.get("/", response_model=List[Order])
-async def list_orders():
-    return list(orders.values())
-
-@router.get("/{order_id}", response_model=Order)
-async def get_order(order_id: str):
-    order = orders.get(order_id)
-    if not order:
-        raise HTTPException(status_code=404, detail="Order not found")
-    return order
-
-@router.put("/{order_id}", response_model=Order)
-async def update_order(order_id: str, updated: Order):
-    if order_id not in orders:
-        raise HTTPException(status_code=404, detail="Order not found")
-    updated.id = order_id
-    orders[order_id] = updated
-    return updated
+@router.put("/{order_id}")
+async def update_order_status(order_id: str, status: dict, token: str = Depends(oauth2_scheme)):
+    async with httpx.AsyncClient() as client:
+        response = await client.put(f"{ORDER_SERVICE_URL}/{order_id}", json=status)
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail=response.text)
+    return response.json()

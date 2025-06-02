@@ -1,46 +1,38 @@
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
-from typing import List
-from uuid import uuid4
+import httpx
+from fastapi.security import OAuth2PasswordBearer
 
 router = APIRouter()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/admin/login")
 
-products = {}
+PRODUCT_SERVICE_URL = "http://product-service:8000/api/v1/products"
 
-class Product(BaseModel):
-    id: str
-    name: str
-    price: float
-    description: str | None = None
+@router.get("/")
+async def get_products(token: str = Depends(oauth2_scheme)):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(PRODUCT_SERVICE_URL)
+    return response.json()
 
-@router.get("/", response_model=List[Product])
-async def list_products():
-    return list(products.values())
+@router.post("/")
+async def create_product(product: dict, token: str = Depends(oauth2_scheme)):
+    async with httpx.AsyncClient() as client:
+        response = await client.post(PRODUCT_SERVICE_URL, json=product)
+    if response.status_code != 201:
+        raise HTTPException(status_code=response.status_code, detail=response.text)
+    return response.json()
 
-@router.post("/", response_model=Product)
-async def create_product(product: Product):
-    product.id = str(uuid4())
-    products[product.id] = product
-    return product
-
-@router.get("/{product_id}", response_model=Product)
-async def get_product(product_id: str):
-    product = products.get(product_id)
-    if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
-    return product
-
-@router.put("/{product_id}", response_model=Product)
-async def update_product(product_id: str, updated: Product):
-    if product_id not in products:
-        raise HTTPException(status_code=404, detail="Product not found")
-    updated.id = product_id
-    products[product_id] = updated
-    return updated
+@router.put("/{product_id}")
+async def update_product(product_id: str, product: dict, token: str = Depends(oauth2_scheme)):
+    async with httpx.AsyncClient() as client:
+        response = await client.put(f"{PRODUCT_SERVICE_URL}/{product_id}", json=product)
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail=response.text)
+    return response.json()
 
 @router.delete("/{product_id}")
-async def delete_product(product_id: str):
-    if product_id not in products:
-        raise HTTPException(status_code=404, detail="Product not found")
-    del products[product_id]
+async def delete_product(product_id: str, token: str = Depends(oauth2_scheme)):
+    async with httpx.AsyncClient() as client:
+        response = await client.delete(f"{PRODUCT_SERVICE_URL}/{product_id}")
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail=response.text)
     return {"detail": "Product deleted"}

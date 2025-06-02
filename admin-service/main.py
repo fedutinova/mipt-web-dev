@@ -3,13 +3,14 @@ from routes import login, products, orders
 from database import engine, Base, SessionLocal
 from models import Admin
 from auth import get_password_hash
-import asyncio
+from routes import products, orders
 
 app = FastAPI()
 
 app.include_router(login.router, prefix="/admin", tags=["auth"])
 app.include_router(products.router, prefix="/admin/products", tags=["products"])
 app.include_router(orders.router, prefix="/admin/orders", tags=["orders"])
+
 
 @app.on_event("startup")
 async def on_startup():
