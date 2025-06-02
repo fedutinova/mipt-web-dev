@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from routes import login, products, orders
 from database import engine, Base, SessionLocal
 from models import Admin
@@ -6,6 +7,14 @@ from auth import get_password_hash
 from routes import products, orders
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(login.router, prefix="/admin", tags=["auth"])
 app.include_router(products.router, prefix="/admin/products", tags=["products"])
