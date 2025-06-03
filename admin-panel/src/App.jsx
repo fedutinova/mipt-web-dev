@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
 import ProductsPage from './pages/ProductsPage';
+import { ProductCreatePage } from './pages/ProductCreatePage';
 import { OrdersPage } from './pages/OrdersPage';
 import { isAuthenticated } from './utils/auth';
 
@@ -16,6 +17,7 @@ function App() {
       <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
       <Route path="/products" element={<PrivateRoute><ProductsPage /></PrivateRoute>} />
       <Route path="/orders" element={<PrivateRoute><OrdersPage /></PrivateRoute>} />
+      <Route path="/products/new" element={<PrivateRoute><ProductCreatePage /></PrivateRoute>} />
     </Routes>
   );
 }

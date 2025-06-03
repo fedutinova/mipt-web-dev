@@ -1,32 +1,18 @@
 import { useEffect, useState } from 'react';
 import {
-  Box, Button, Heading, Input, Stack, Table, Thead, Tbody, Tr, Th, Td, useToast, Select, FormControl, FormLabel, Flex, Switch
+  Box, Button, Heading, Table, Thead, Tbody, Tr, Th, Td, Flex, Switch
 } from '@chakra-ui/react';
 import axios from 'axios';
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState({ name: '', description: '', price: '' });
-  const toast = useToast();
+  const navigate = useNavigate();
 
   const fetchProducts = async () => {
     const res = await axios.get('http://localhost:8001/api/v1/products');
     setProducts(res.data);
-  };
-
-  const handleCreate = async () => {
-    try {
-      await axios.post('http://localhost:8001/api/v1/products', {
-        ...newProduct,
-        price: parseFloat(newProduct.price)
-      });
-      toast({ title: 'Товар добавлен', status: 'success' });
-      setNewProduct({ name: '', description: '', price: '' });
-      fetchProducts();
-    } catch (err) {
-      toast({ title: 'Ошибка при добавлении', status: 'error' });
-    }
   };
 
   useEffect(() => {
@@ -39,7 +25,7 @@ export default function ProductsPage() {
       <Box p={6}>
         <Flex justify="space-between" align="center" mb={4}>
           <Heading>Товары</Heading>
-          <Button minW="120px" colorScheme="green" onClick={handleCreate}>Добавить</Button>
+          <Button minW="120px" colorScheme="green" onClick={() => navigate("/products/new")}>Добавить</Button>
         </Flex>
 
         <Table>
