@@ -44,20 +44,9 @@ export default function Catalog() {
           onChange={(e) => setSearchTerm(e.target.value)}
           maxW="400px"
         />
-        <Select 
-          value={filter} 
-          onChange={(e) => setFilter(e.target.value)}
-          maxW="200px"
-        >
-          <option value="all">Все типы</option>
-          <option value="led">LED</option>
-          <option value="incandescent">Лампы накаливания</option>
-          <option value="halogen">Галогенные</option>
-          <option value="energy-saving">Энергосберегающие</option>
-        </Select>
       </Box>
       
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+      <SimpleGrid columns={{ base: 1, md: 3, lg: 4 }} spacing={6}>
         {filteredProducts.map(product => (
           <ProductCard key={product.id} product={product} />
         ))}

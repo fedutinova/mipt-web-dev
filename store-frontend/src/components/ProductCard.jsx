@@ -15,7 +15,7 @@ export default function ProductCard({ product }) {
       _hover={{ boxShadow: 'xl' }}
     >
       <Image 
-        src={product.image} 
+        src={product.image_url} 
         alt={product.name} 
         objectFit="cover" 
         h="200px" 

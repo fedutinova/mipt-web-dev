@@ -8,7 +8,7 @@ const featuredProducts = [
     name: 'LED лампа E27 10W',
     description: 'Тёплый свет, эквивалент 75W лампы накаливания',
     price: 299,
-    image: 'https://lighting.su/upload/iblock/cbe/cbe4fd1f8392b39c44c56214f3b8d90a.jpg',
+    image_url: 'https://lighting.su/upload/iblock/cbe/cbe4fd1f8392b39c44c56214f3b8d90a.jpg',
     type: 'led'
   },
   {
@@ -16,7 +16,7 @@ const featuredProducts = [
     name: 'Галогенная лампа G9 40W',
     description: 'Яркий точечный свет для интерьерного освещения',
     price: 189,
-    image: 'https://cdn.minimir.ru/images/catalog/galogennaya-lampa-40w-g9-g9-220v40w-a022321_0002.jpg',
+    image_url: 'https://cdn.minimir.ru/images/catalog/galogennaya-lampa-40w-g9-g9-220v40w-a022321_0002.jpg',
     type: 'halogen'
   },
   {
@@ -24,7 +24,7 @@ const featuredProducts = [
     name: 'Энергосберегающая лампа E14 15W',
     description: 'Холодный белый свет, долгий срок службы',
     price: 349,
-    image: 'https://donplafon.ru/upload/iblock/fa9/zkm60s9erkr3n8jvif1usfmsqlnlsoga/lampa_energosberegayushchaya_uniel_00554_e14_15w_2700k_matovaya_esl_s11_15_2700_e14.jpeg',
+    image_url: 'https://donplafon.ru/upload/iblock/fa9/zkm60s9erkr3n8jvif1usfmsqlnlsoga/lampa_energosberegayushchaya_uniel_00554_e14_15w_2700k_matovaya_esl_s11_15_2700_e14.jpeg',
     type: 'energy-saving',
     discount: 15
   }
@@ -65,18 +65,6 @@ export default function Home() {
           />
         </Box>
       </Flex>
-
-      {/* Рекомендуемые товары */}
-      <Box py={8}>
-        <Heading as="h2" size="lg" mb={6} textAlign="center">
-          Популярные товары
-        </Heading>
-        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
-          {featuredProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </SimpleGrid>
-      </Box>
 
       {/* Преимущества */}
       <Box py={8} bg="gray.50" borderRadius="md" px={4}>
