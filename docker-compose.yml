@@ -74,6 +74,16 @@ services:
     ports:
       - "8003:8000"
 
+  admin-panel:
+    build: ./admin-panel
+    ports:
+      - "5173:5173"
+
+  store-frontend:
+    build: ./store-frontend
+    ports:
+      - "5174:5173"
+
 volumes:
   product_data:
   order_data:
