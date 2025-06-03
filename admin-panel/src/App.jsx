@@ -3,6 +3,7 @@ import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
 import ProductsPage from './pages/ProductsPage';
 import { ProductCreatePage } from './pages/ProductCreatePage';
+import { ProductEditPage } from './pages/ProductEditPage';
 import { OrdersPage } from './pages/OrdersPage';
 import { isAuthenticated } from './utils/auth';
 
@@ -18,6 +19,7 @@ function App() {
       <Route path="/products" element={<PrivateRoute><ProductsPage /></PrivateRoute>} />
       <Route path="/orders" element={<PrivateRoute><OrdersPage /></PrivateRoute>} />
       <Route path="/products/new" element={<PrivateRoute><ProductCreatePage /></PrivateRoute>} />
+      <Route path="/products/:id/edit" element={<PrivateRoute><ProductEditPage /></PrivateRoute>} />
     </Routes>
   );
 }

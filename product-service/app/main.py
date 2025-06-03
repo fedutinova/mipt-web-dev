@@ -45,7 +45,7 @@ async def get_product(product_id: str, session: AsyncSession = Depends(database.
 async def create_product(product: schemas.ProductCreate, session: AsyncSession = Depends(database.get_session)):
     return await crud.create_product(session, product)
 
-@app.put("/api/v1/products/{product_id}", response_model=schemas.ProductOut)
+@app.post("/api/v1/products/{product_id}", response_model=schemas.ProductOut)
 async def update_product(product_id: str, upd: schemas.ProductUpdate, session: AsyncSession = Depends(database.get_session)):
     product = await crud.update_product(session, product_id, upd)
     if not product:
