@@ -16,9 +16,11 @@ export function OrdersPage() {
 
   const updateStatus = async (orderId, status) => {
     try {
-      await axios.put(`http://localhost:8002/api/v1/orders/${orderId}`, { status });
+      await axios.put(`http://localhost:8002/api/v1/orders/${orderId}/status`, null, {
+        params: { status }
+      });
+      setOrders((prev) => prev.map((o) => o.id === orderId ? { ...o, status } : o));
       toast({ title: 'Статус обновлен', status: 'success' });
-      fetchOrders();
     } catch (err) {
       toast({ title: 'Ошибка обновления статуса', status: 'error' });
     }
@@ -30,44 +32,46 @@ export function OrdersPage() {
 
   return (
     <Box>
-          <Header />
-    <Box p={6}>
-      <Heading mb={4}>Заказы</Heading>
-      <Table>
-        <Thead>
-          <Tr>
-            <Th>ID</Th>
-            <Th>Имя клиента</Th>
-            <Th>Телефон</Th>
-            <Th>Email</Th>
-            <Th>Статус</Th>
-            <Th>Действия</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {orders.map(o => (
-            <Tr key={o.id}>
-              <Td>{o.id}</Td>
-              <Td>{o.customer_name}</Td>
-              <Td>{o.customer_phone}</Td>
-              <Td>{o.customer_email}</Td>
-              <Td>{o.status}</Td>
-              <Td>
-                <Select
-                  size="sm"
-                  defaultValue={o.status}
-                  onChange={e => updateStatus(o.id, e.target.value)}
-                >
-                  <option value="new">Новый</option>
-                  <option value="processing">В обработке</option>
-                  <option value="done">Выполнен</option>
-                </Select>
-              </Td>
+      <Header />
+      <Box p={6}>
+        <Heading mb={4}>Заказы</Heading>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>ID</Th>
+              <Th>Имя клиента</Th>
+              <Th>Телефон</Th>
+              <Th>Email</Th>
+              <Th>Город</Th>
+              <Th>Статус</Th>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </Box>
+          </Thead>
+          <Tbody>
+            {orders.map((o) => (
+              <Tr key={o.id}>
+                <Td>{o.id}</Td>
+                <Td>{o.customer_name}</Td>
+                <Td>{o.customer_phone}</Td>
+                <Td>{o.customer_email}</Td>
+                <Td>{o.city}</Td>
+                <Td>
+                  <Select
+                    size="sm"
+                    value={o.status}
+                    onChange={(e) => updateStatus(o.id, e.target.value)}
+                  >
+                    <option value="pending">Ожидает</option>
+                    <option value="paid">Оплачен</option>
+                    <option value="shipped">Отправлен</option>
+                    <option value="completed">Завершён</option>
+                    <option value="cancelled">Отменён</option>
+                  </Select>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </Box>
     </Box>
   );
 }
