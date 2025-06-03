@@ -63,21 +63,21 @@ DEMO_PRODUCTS = [
         name="LED-лампа E27 9 Вт (теплый свет)",
         description="Экономичная светодиодная лампочка с ресурсом 30 000 ч.",
         price=149.00,
-        quantity=10,
+        in_stock=10,
         image_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWHhpVCoFNSO3rKm0tMUjrXPtVetFgJAbIew&s"
     ),
     dict(
         name="Умная RGB-лампа Wi-Fi E14 7 Вт",
         description="Поддержка Alexa / Google Home, 16 млн цветов.",
         price=799.00,
-        quantity=8,
+        in_stock=8,
         image_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo88-PziXwGXpA_50SZwgxnnyM75svc3V7sw&s"
     ),
     dict(
         name="Ретро-лампа Эдисона ST64 60 Вт",
         description="Накаливание, теплый янтарный оттенок, декоративная спираль.",
         price=259.00,
-        quantity=16,
+        in_stock=16,
         image_url="https://i1.wp.com/jazzlight.ru/wp-content/uploads/2016/11/st64f2g.jpg?fit=850%2C850&ssl=1"
     ),
 ]

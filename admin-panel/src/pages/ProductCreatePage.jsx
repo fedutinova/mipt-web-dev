@@ -11,6 +11,7 @@ export function ProductCreatePage() {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [inStock, setInStock] = useState('');
+  const [image_url, setImage_url] = useState('');
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -20,7 +21,8 @@ export function ProductCreatePage() {
         name,
         description,
         price: parseFloat(price),
-        in_stock: parseInt(inStock, 10)
+        in_stock: parseInt(inStock, 10),
+        image_url
       });
       toast({ title: 'Товар добавлен', status: 'success' });
       navigate('/products');
@@ -50,6 +52,10 @@ export function ProductCreatePage() {
           <FormControl>
             <FormLabel>Количество</FormLabel>
             <Input type="number" value={inStock} onChange={e => setInStock(e.target.value)} />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Ссылка на изображение</FormLabel>
+            <Input value={image_url} onChange={e => setImage_url(e.target.value)} />
           </FormControl>
           <Button colorScheme="teal" onClick={handleSubmit}>Сохранить</Button>
         </Stack>
