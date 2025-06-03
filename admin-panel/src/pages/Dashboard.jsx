@@ -1,29 +1,10 @@
 import { Box, Heading, VStack, useToast, Button } from "@chakra-ui/react";
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import Header from '../components/Header';
 
 export default function Dashboard() {
   const toast = useToast();
-
-  const fetchProducts = async () => {
-    try {
-      const res = await axios.get('http://localhost:8001/api/v1/products');
-      console.log('Товары:', res.data);
-      toast({ title: 'Товары загружены', status: 'success' });
-    } catch (error) {
-      toast({ title: 'Ошибка при загрузке товаров', status: 'error' });
-    }
-  };
-
-  const fetchOrders = async () => {
-    try {
-      const res = await axios.get('http://localhost:8002/api/v1/orders');
-      console.log('Заказы:', res.data);
-      toast({ title: 'Заказы загружены', status: 'success' });
-    } catch (error) {
-      toast({ title: 'Ошибка при загрузке заказов', status: 'error' });
-    }
-  };
+  const navigate = useNavigate();
 
   return (
     <Box>
@@ -31,11 +12,11 @@ export default function Dashboard() {
       <Box p={6}>
         <Heading mb={4}>Добро пожаловать в панель администратора</Heading>
         <VStack spacing={4} mt={6}>
-          <Button colorScheme="teal" onClick={fetchProducts}>
-            Загрузить товары
+          <Button variant="outline" colorScheme="black" size='lg' width='300px' onClick={() => navigate("/products")} mr={3}>
+            Товары
           </Button>
-          <Button colorScheme="teal" onClick={fetchOrders}>
-            Загрузить заказы
+          <Button variant="outline" colorScheme="black" size='lg' width='300px' onClick={() => navigate("/orders")} mr={3}>
+            Заказы
           </Button>
         </VStack>
       </Box>

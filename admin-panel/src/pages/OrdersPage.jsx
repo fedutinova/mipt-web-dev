@@ -3,19 +3,20 @@ import {
   Box, Heading, Table, Thead, Tbody, Tr, Th, Td, useToast, Select
 } from '@chakra-ui/react';
 import axios from 'axios';
+import Header from "../components/Header";
 
 export function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const toast = useToast();
 
   const fetchOrders = async () => {
-    const res = await axios.get('http://localhost:8000/api/v1/orders');
+    const res = await axios.get('http://localhost:8002/api/v1/orders');
     setOrders(res.data);
   };
 
   const updateStatus = async (orderId, status) => {
     try {
-      await axios.put(`http://localhost:8000/api/v1/orders/${orderId}`, { status });
+      await axios.put(`http://localhost:8002/api/v1/orders/${orderId}`, { status });
       toast({ title: 'Статус обновлен', status: 'success' });
       fetchOrders();
     } catch (err) {
@@ -28,6 +29,8 @@ export function OrdersPage() {
   }, []);
 
   return (
+    <Box>
+          <Header />
     <Box p={6}>
       <Heading mb={4}>Заказы</Heading>
       <Table>
@@ -64,6 +67,7 @@ export function OrdersPage() {
           ))}
         </Tbody>
       </Table>
+    </Box>
     </Box>
   );
 }

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import {
-  Box, Button, Heading, Input, Stack, Table, Thead, Tbody, Tr, Th, Td, useToast
+  Box, Button, Heading, Input, Stack, Table, Thead, Tbody, Tr, Th, Td, useToast, Select, FormControl, FormLabel, Flex, Switch
 } from '@chakra-ui/react';
 import axios from 'axios';
+import Header from "../components/Header";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -33,48 +34,41 @@ export default function ProductsPage() {
   }, []);
 
   return (
-    <Box p={6}>
-      <Heading mb={4}>Товары</Heading>
-      <Stack direction="row" spacing={4} mb={4}>
-        <Input
-          placeholder="Название"
-          value={newProduct.name}
-          onChange={e => setNewProduct({ ...newProduct, name: e.target.value })}
-        />
-        <Input
-          placeholder="Описание"
-          value={newProduct.description}
-          onChange={e => setNewProduct({ ...newProduct, description: e.target.value })}
-        />
-        <Input
-          placeholder="Цена"
-          type="number"
-          value={newProduct.price}
-          onChange={e => setNewProduct({ ...newProduct, price: e.target.value })}
-        />
-        <Button colorScheme="teal" onClick={handleCreate}>Добавить</Button>
-      </Stack>
+    <Box>
+      <Header />
+      <Box p={6}>
+        <Flex justify="space-between" align="center" mb={4}>
+          <Heading>Товары</Heading>
+          <Button minW="120px" colorScheme="green" onClick={handleCreate}>Добавить</Button>
+        </Flex>
 
-      <Table>
-        <Thead>
-          <Tr>
-            <Th>ID</Th>
-            <Th>Название</Th>
-            <Th>Описание</Th>
-            <Th>Цена</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {products.map(p => (
-            <Tr key={p.id}>
-              <Td>{p.id}</Td>
-              <Td>{p.name}</Td>
-              <Td>{p.description}</Td>
-              <Td>{p.price}</Td>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>ID</Th>
+              <Th>Название</Th>
+              <Th>Описание</Th>
+              <Th>Цена</Th>
+              <Th whiteSpace="nowrap">В наличии</Th>
+              <Th>Активен</Th>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
+          </Thead>
+          <Tbody>
+            {products.map(p => (
+              <Tr key={p.id}>
+                <Td>{p.id}</Td>
+                <Td>{p.name}</Td>
+                <Td>{p.description}</Td>
+                <Td>{p.price}</Td>
+                <Td>{p.in_stock}</Td>
+                <Td>
+                  <Switch isChecked={p.is_active} isReadOnly />
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </Box>
     </Box>
   );
 }

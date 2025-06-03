@@ -10,15 +10,15 @@ export default function Header() {
   };
 
   return (
-    <Flex bg="teal.500" color="white" p={4} align="center">
-      <Heading size="md" onClick={() => navigate("/admin")} cursor="pointer">
+    <Flex bg="black.0" color="white" p={4} align="center">
+      <Heading size="md" onClick={() => navigate("/")} cursor="pointer">
         Панель администратора
       </Heading>
       <Spacer />
-      <Button variant="outline" colorScheme="whiteAlpha" onClick={() => navigate("http://localhost:8003/admin/products")} mr={3}>
+      <Button variant="ghost" colorScheme="white" onClick={() => navigate("/products")} mr={3}>
         Товары
       </Button>
-      <Button variant="outline" colorScheme="whiteAlpha" onClick={() => navigate("http://localhost:8003/admin/orders")} mr={3}>
+      <Button variant="ghost" colorScheme="white" onClick={() => navigate("/orders")} mr={3}>
         Заказы
       </Button>
       <Button colorScheme="red" variant="solid" onClick={logout}>
