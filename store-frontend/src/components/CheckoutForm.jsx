@@ -40,7 +40,7 @@ export default function CheckoutForm({ cartItems, onSubmitSuccess }) {
     };
 
     try {
-      await axios.post("http://0.0.0.0:8002/api/v1/orders", payload);
+      await axios.post("http://localhost:8002/api/v1/orders", payload);
       toast({
         title: "Заказ оформлен",
         description: "Мы свяжемся с вами для подтверждения",
